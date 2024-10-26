@@ -7,11 +7,13 @@ import Home from '../components/Home'
 import EmployeeHome from '../pages/employeepages/EmployeeHome'
 import AdminHome from '../pages/adminpages/AdminHome'
 import JudgeHome from '../pages/judgepages/JudgeHome'
+import EmployeeRegister from '../pages/employeepages/EmployeeRegister'
 const Routers = () => {
   return (
     <Routes>
         <Route path='/' element={<Login/>}/>
         <Route path='/home' element={<EmployeeHome/>}/>
+        <Route path='/employeeRegister' element={<EmployeeRegister/>}/>
         <Route path='/judgedashboard' element={<JudgeHome/>}/>
         <Route path='/admindashboard' element={<AdminHome/>}/>
         <Route path='/login' element={<Login/>}/>

@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import { authContext } from '../context/AuthContext.jsx';
 import { BASE_URL } from '../config.js';
 import { HashLoader } from 'react-spinners';
+
 const Login = () => {
   const [formData, setFormData] = useState({
     email: '',
@@ -12,9 +13,11 @@ const Login = () => {
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const { dispatch } = useContext(authContext);
+
   const handleInputChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
+
   const submitHandler = async event => {
     event.preventDefault();
     setLoading(true);
@@ -40,9 +43,9 @@ const Login = () => {
       });
       if (result.role === 'employee') {
         navigate('/home');
-      }else if (result.role === 'admin') {
+      } else if (result.role === 'admin') {
         navigate('/admindashboard');
-      }else if (result.role === 'judge') {
+      } else if (result.role === 'judge') {
         navigate('/judgedashboard');
       }
     } catch (error) {
@@ -50,11 +53,12 @@ const Login = () => {
       setLoading(false);
     }
   };
+
   return (
-    <section className='flex items-center justify-center min-h-screen px-5 lg:px-0 bg-purple-50'>
+    <section className='flex items-center justify-center min-h-screen px-5 lg:px-0 bg-blue-50'>
       <div className="w-full max-w-[570px] mx-auto bg-white rounded-lg shadow-lg p-8 md:p-10">
-        <h3 className="text-purple-800 text-[22px] leading-9 font-bold mb-10">
-          Hello! <span className="text-purple-600">Welcome</span> Back 😊
+        <h3 className="text-blue-800 text-[22px] leading-9 font-bold mb-10">
+          Hello! <span className="text-blue-600">Welcome</span> Back 😊
         </h3>
         <form className='py-4 md:py-0' onSubmit={submitHandler}>
           <div className="mb-5">
@@ -64,7 +68,7 @@ const Login = () => {
               placeholder='Enter your Email'
               value={formData.email}
               onChange={handleInputChange}
-              className='w-full px-4 py-3 border border-solid border-purple-300 focus:outline-none focus:border-purple-500 text-[16px] leading-7 text-purple-900 placeholder-purple-400 rounded-md'
+              className='w-full px-4 py-3 border border-solid border-blue-300 focus:outline-none focus:border-blue-500 text-[16px] leading-7 text-blue-900 placeholder-blue-400 rounded-md'
               required
             />
           </div>
@@ -75,21 +79,22 @@ const Login = () => {
               placeholder='Password'
               value={formData.password}
               onChange={handleInputChange}
-              className='w-full px-4 py-3 border border-solid border-purple-300 focus:outline-none focus:border-purple-500 text-[16px] leading-7 text-purple-900 placeholder-purple-400 rounded-md'
+              className='w-full px-4 py-3 border border-solid border-blue-300 focus:outline-none focus:border-blue-500 text-[16px] leading-7 text-blue-900 placeholder-blue-400 rounded-md'
               required
             />
           </div>
           <div className="mt-7">
-            <button type='submit' className="w-full bg-purple-600 hover:bg-purple-700 text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
+            <button type='submit' className="w-full bg-blue-600 hover:bg-blue-700 text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
               {loading ? <HashLoader size={25} color='#fff' /> : 'Login'}
             </button>
           </div>
-          <p className="mt-5 text-purple-500 text-center">
-            Don&apos;t have an account? <Link to='/signup' className='text-purple-700 font-medium ml-1'>Register</Link>
+          <p className="mt-5 text-blue-500 text-center">
+            Don&apos;t have an account? <Link to='/signup' className='text-blue-700 font-medium ml-1'>Register</Link>
           </p>
         </form>
       </div>
     </section>
   );
 }
+
 export default Login;
