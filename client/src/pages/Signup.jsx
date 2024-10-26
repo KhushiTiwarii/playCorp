@@ -27,7 +27,7 @@ const Signup = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/auth/register`, {
+      const res = await fetch(`http://localhost:5000/api/auth/signup`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

@@ -22,10 +22,10 @@ const Login = () => {
     event.preventDefault();
     setLoading(true);
     try {
-      const res = await fetch(`${BASE_URL}/auth/login`, {
-        method: 'post',
+      const res = await fetch(`http://localhost:5000/api/auth/login`, {
+        method: 'POST',
         headers: {
-          'Content-type': 'application/json'
+          'Content-Type': 'application/json'
         },
         body: JSON.stringify(formData)
       });
@@ -33,14 +33,19 @@ const Login = () => {
       if (!res.ok) {
         throw new Error(result.message);
       }
+      console.log(result);
+      
+      // Update auth state with token and user role
       dispatch({
         type: 'LOGIN_SUCCESS',
         payload: {
-          user: result.data,
+          user: result.userId,
           token: result.token,
           role: result.role
         }
       });
+
+      // Redirect based on role
       if (result.role === 'employee') {
         navigate('/home');
       } else if (result.role === 'admin') {
@@ -84,7 +89,7 @@ const Login = () => {
             />
           </div>
           <div className="mt-7">
-            <button type='submit' className="w-full bg-blue-600 hover:bg-blue-700 text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
+            <button type='submit'  className="w-full bg-blue-600 hover:bg-blue-700 text-white text-[18px] leading-[30px] rounded-lg px-4 py-3">
               {loading ? <HashLoader size={25} color='#fff' /> : 'Login'}
             </button>
           </div>

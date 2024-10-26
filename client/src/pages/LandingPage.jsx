@@ -6,6 +6,7 @@ import { HashLoader } from 'react-spinners'
 import Select from 'react-select'
 import { toast, ToastContainer } from 'react-toastify'
 import 'react-toastify/dist/ReactToastify.css'
+import { useNavigate } from 'react-router-dom'
 
 // Data
 const features = [
@@ -85,6 +86,13 @@ const sponsors = [
 
 // Components
 function Hero({ onSignupClick, onLoginClick }) {
+  const navigate=useNavigate()
+  const handleJoin=()=>{
+    navigate('/signup')
+  }
+  const handleLogin=()=>{
+    navigate('/login')
+  }
   return (
     <header className="container mx-auto px-4 py-24 text-center">
       <div className="flex items-center justify-center mb-6">
@@ -101,7 +109,7 @@ function Hero({ onSignupClick, onLoginClick }) {
       </p>
       <div className="flex gap-6 justify-center">
         <button
-          onClick={onSignupClick}
+          onClick={handleJoin}
           className="bg-blue-600 hover:bg-blue-700 text-lg text-white py-4 px-8 rounded-full relative overflow-hidden group"
         >
           <span className="relative z-10 flex items-center">
@@ -111,7 +119,7 @@ function Hero({ onSignupClick, onLoginClick }) {
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500 to-blue-600 transform scale-x-0 group-hover:scale-x-100 transition-transform origin-left"></div>
         </button>
         <button
-          onClick={onLoginClick}
+          onClick={handleLogin}
           className="border-2 border-white text-lg text-white py-4 px-8 rounded-full hover:bg-blue-50/5 transition-colors"
         >
           Login

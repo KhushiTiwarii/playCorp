@@ -12,14 +12,13 @@ import LandingPage from '../pages/LandingPage'
 const Routers = () => {
   return (
     <Routes>
-        <Route path='/' element={<Login/>}/>
+        <Route path='/' element={<LandingPage/>}/>
         <Route path='/home' element={<EmployeeHome/>}/>
         <Route path='/employeeRegister' element={<EmployeeRegister/>}/>
         <Route path='/judgedashboard' element={<JudgeHome/>}/>
         <Route path='/admindashboard' element={<AdminHome/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
-        <Route path='/landing' element={<LandingPage/>}/>
         
     </Routes>
   )
