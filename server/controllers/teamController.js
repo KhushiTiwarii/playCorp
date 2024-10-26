@@ -53,3 +53,12 @@ export const getTeamsByEvent = async (req, res) => {
     res.status(500).json({ message: error.message });
   }
 };
+
+export const getTeamsByUser = async (req, res) => {
+  try {
+    const teams = await Team.find({ members: req.params.userId }).populate('members', 'email');
+    res.status(200).json(teams);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
