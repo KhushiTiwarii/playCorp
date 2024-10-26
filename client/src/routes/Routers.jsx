@@ -8,6 +8,7 @@ import EmployeeHome from '../pages/employeepages/EmployeeHome'
 import AdminHome from '../pages/adminpages/AdminHome'
 import JudgeHome from '../pages/judgepages/JudgeHome'
 import EmployeeRegister from '../pages/employeepages/EmployeeRegister'
+import LandingPage from '../pages/LandingPage'
 const Routers = () => {
   return (
     <Routes>
@@ -18,6 +19,7 @@ const Routers = () => {
         <Route path='/admindashboard' element={<AdminHome/>}/>
         <Route path='/login' element={<Login/>}/>
         <Route path='/signup' element={<Signup/>}/>
+        <Route path='/landing' element={<LandingPage/>}/>
         
     </Routes>
   )
