@@ -40,6 +40,10 @@ const Login = () => {
       });
       if (result.role === 'employee') {
         navigate('/home');
+      }else if (result.role === 'admin') {
+        navigate('/admindashboard');
+      }else if (result.role === 'judge') {
+        navigate('/judgedashboard');
       }
     } catch (error) {
       toast.error(error.message);
