@@ -23,6 +23,7 @@ const Routers = () => {
         <Route path='/signup' element={<Signup/>}/>
         <Route path='/myteams' element={<EmployeeTeams/>}/>
         <Route path='/leaderboard' element={<LeaderBoard/>}/>
+        <Route path='/certificate' element={<LeaderBoard/>}/>
         
     </Routes>
   )

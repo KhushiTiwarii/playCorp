@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Bar, Line } from "react-chartjs-2";
+import { Bar, Line, Pie } from "react-chartjs-2"; // Import Pie
 import { Calendar, momentLocalizer } from "react-big-calendar";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -15,6 +15,7 @@ import {
   Tooltip,
   Legend,
   PointElement,
+  ArcElement, // Import for Pie Chart
 } from "chart.js";
 
 ChartJS.register(
@@ -25,7 +26,8 @@ ChartJS.register(
   PointElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  ArcElement // Register ArcElement for Pie Chart
 );
 
 const localizer = momentLocalizer(moment);
@@ -34,6 +36,7 @@ export default function LeaderBoard() {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [events, setEvents] = useState([]);
   const [teamData, setTeamData] = useState([]);
+  const [categoryData, setCategoryData] = useState({}); // State to hold category data
 
   useEffect(() => {
     fetchLeaderboardData();
@@ -57,7 +60,6 @@ export default function LeaderBoard() {
       const response = await fetch("http://localhost:5000/api/events");
       if (!response.ok) throw new Error("Failed to fetch events");
       const data = await response.json();
-      console.log(data);
       
       // Convert event dates to JavaScript Date objects
       const formattedEvents = data.map(event => ({
@@ -68,6 +70,14 @@ export default function LeaderBoard() {
       }));
 
       setEvents(formattedEvents);
+
+      // Count occurrences of each category
+      const categoryCount = data.reduce((acc, event) => {
+        acc[event.category] = (acc[event.category] || 0) + 1;
+        return acc;
+      }, {});
+
+      setCategoryData(categoryCount); // Set category data
     } catch (error) {
       console.error("Error fetching events:", error);
     }
@@ -82,7 +92,7 @@ export default function LeaderBoard() {
     } catch (error) {
       console.error("Error fetching team data:", error);
     }
-  }
+  };
 
   const leaderboardChartData = {
     labels: leaderboardData.map(user => user.email),
@@ -110,8 +120,27 @@ export default function LeaderBoard() {
     ],
   };
 
+  // Prepare data for Pie Chart
+  const pieChartData = {
+    labels: Object.keys(categoryData), // Categories
+    datasets: [
+      {
+        label: "Event Categories",
+        data: Object.values(categoryData), // Counts for each category
+        backgroundColor: [
+          "rgba(255, 99, 132, 0.6)",
+          "rgba(54, 162, 235, 0.6)",
+          "rgba(255, 206, 86, 0.6)",
+          "rgba(75, 192, 192, 0.6)",
+          "rgba(153, 102, 255, 0.6)",
+        ],
+      },
+    ],
+  };
+
   return (
     <div className="container mx-auto px-4 py-8">
+        
       <h1 className="text-3xl font-bold mb-8">Analytics Dashboard</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
@@ -124,6 +153,12 @@ export default function LeaderBoard() {
           <Line data={teamSizeChartData} options={{ responsive: true }} />
         </div>
       </div>
+      <div className="bg-white p-6 rounded-lg shadow-md mb-8">
+  <h2 className="text-xl font-semibold mb-4">Event Categories</h2>
+  <div style={{ width: "300px", height: "300px" }}> {/* Adjusted size */}
+    <Pie data={pieChartData} options={{ responsive: true }} />
+  </div>
+</div>
 
       <div className="bg-white p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-xl font-semibold mb-4">Event Calendar</h2>
@@ -137,6 +172,7 @@ export default function LeaderBoard() {
           />
         </div>
       </div>
+
 
       <div className="bg-white p-6 rounded-lg shadow-md">
         <h2 className="text-xl font-semibold mb-4">Top Performers</h2>
